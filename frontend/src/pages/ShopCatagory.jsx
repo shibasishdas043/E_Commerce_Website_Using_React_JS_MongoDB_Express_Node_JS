@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./ShopCatagory/ShopCatagory.css";
 import { ShopContext } from "../context/ShopContext";
 import dropdown_icon from "../components/assets/Frontend_Assets/dropdown_icon.png";
-import Item from "../components/Item/Item";
+import Item from "../components/Item/item";
 import "./ShopCatagory/ShopCatagory.css";
 
 const ShopCatagory = ({ catagory, banner }) => {
@@ -21,7 +21,7 @@ const ShopCatagory = ({ catagory, banner }) => {
       </div>
       <div className="shopcategory-products">
         {all_product.map((product, index) => {
-          if (catagory === product.catagory) {
+          if (catagory === product.category) {
             return (
               <Item
                 key={index}

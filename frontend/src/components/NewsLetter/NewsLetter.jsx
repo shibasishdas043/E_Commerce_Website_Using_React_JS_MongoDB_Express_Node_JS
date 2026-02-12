@@ -11,7 +11,7 @@ const NewsLetter = () => {
               Subscribe To Our News Letter And Stay Updated
           </p>
           <div>
-              <input type="email" placeholder='Your Email id' />
+              <input id='form' type="email" placeholder='Your Email id' />
               <button>Subscribe</button>
           </div>
           
