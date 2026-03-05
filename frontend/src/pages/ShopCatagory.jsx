@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import dropdown_icon from "../components/assets/Frontend_Assets/dropdown_icon.png";
-import Item from "../components/Item/item";
+import Item from "../components/Item/Item";
 import "./CSS/ShopCatagory.css";
 
 const ShopCatagory = ({ catagory, banner }) => {
