@@ -27,6 +27,8 @@ const ShopCatagory = ({ catagory, banner }) => {
                 id={product.id}
                 name={product.name}
                 image={product.image}
+                new_price={product.new_price}
+                old_price={product.old_price}
               />
             );
           } else {
