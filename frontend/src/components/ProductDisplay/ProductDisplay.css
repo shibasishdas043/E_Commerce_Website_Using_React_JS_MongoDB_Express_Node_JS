@@ -1,12 +1,13 @@
 .productdisplay{
     display: flex;
-    margin: 0px 170px;
+    margin: 0px;
+    width: auto;
 
 }
 
 .productdisplay-left{
     display: flex;
-    gap: 17px;
+    gap: 8px;
 }
 
 .productdisplay-img-list{
@@ -80,3 +81,26 @@
     border-radius: 3px;
     cursor: pointer;
 }
+.productdisplay-right button{
+    padding: 20px 40px;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background:#ff4141;
+    margin-bottom: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+}
+
+.productdisplay-right-category{
+    margin-top: 10px;
+
+}
+
+.productdisplay-right-category span{
+    font-weight: 600;
+}
+

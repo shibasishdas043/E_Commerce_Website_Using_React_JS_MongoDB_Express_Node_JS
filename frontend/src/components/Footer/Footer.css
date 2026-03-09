@@ -44,6 +44,8 @@
 }
 .footer-copyright{
     display: flex;
+    justify-content: center;
+    justify-items: center;
     flex-direction: column;
     gap: 30px;
     width:100%;
@@ -52,7 +54,7 @@
     font-size: 20px;
 }
 .footer-copyright hr{
-    width: 80%;
+    width: auto;
     border: none;
     border-radius: 10px;
     height: 3px;
