@@ -14,7 +14,7 @@ app.use(cors());
 
 mongoose
   .connect(
-    "mongodb+srv://shibasishdas043_db_user:+!Zibg9tQ!a7_6g@cluster0.si9gkky.mongodb.net/?appName=Cluster0",
+    "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
   )
   .then(() => {
     console.log("Successfully connected to MongoDB");
@@ -29,31 +29,32 @@ app.get("/", (request, response) => {
   response.send("Express App is Running");
 });
 
-
-
 //Image storage engine
 
 const storage = multer.diskStorage({
-  destination: './upload/images',
+  destination: "./upload/images",
   filename: (request, file, cb) => {
-    return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-  }
-})
+    return cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`,
+    );
+  },
+});
 
 const upload = multer({
-  storage:storage
-})
+  storage: storage,
+});
 
 //creating upload endpoint for images
 
-app.use('./images', express.static('upload/images'));
+app.use("./images", express.static("upload/images"));
 
-app.post('/upload', upload.single('product'), (request, response) => {
+app.post("/upload", upload.single("product"), (request, response) => {
   response.json({
     success: 1,
-    image_url:`http://localhost:${port}/images/${request.file.filename}`,
-  })
-})
+    image_url: `http://localhost:${port}/images/${request.file.filename}`,
+  });
+});
 
 app.listen(port, (error) => {
   if (!error) {
