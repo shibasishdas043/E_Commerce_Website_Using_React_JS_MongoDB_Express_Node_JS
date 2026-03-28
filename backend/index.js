@@ -15,7 +15,7 @@ app.use(cors());
 mongoose
   .connect(
     // "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
-    "mongodb://localhost:27017/"
+    "mongodb://localhost:27017/",
   )
   .then(() => {
     console.log("Successfully connected to MongoDB");
@@ -105,6 +105,16 @@ const Product = mongoose.model("Product", {
 // }
 
 app.post("/addproduct", async (request, response) => {
+  let products = await Product.find({});
+  let id;
+  if (products.length > 0) {
+    let last_product_array = products.slice(-1);
+    let last_product = last_product_array[0];
+    id = last_product.id + 1;
+  } else {
+    id = 1;
+  }
+
   const product = new Product({
     id: request.body.id,
     name: request.body.name,
@@ -121,6 +131,25 @@ app.post("/addproduct", async (request, response) => {
     name: request.body.name,
   });
 });
+
+//creating api for deleting products
+
+app.post("/removeproduct", async (request, response) => {
+  await Product.findOneAndDelete({ id: request.body.id });
+  console.log("Remove");
+  response.json({
+    success: true,
+    name: request.body.name,
+  });
+});
+
+//creating api for getting all products
+
+app.get('/allproducts', async (request, response) => {
+  let products = await Product.find({});
+  console.log('All products fetched');
+  response.send(products);
+})
 
 app.listen(port, (error) => {
   if (!error) {
