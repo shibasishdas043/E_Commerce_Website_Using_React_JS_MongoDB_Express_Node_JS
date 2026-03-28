@@ -14,7 +14,8 @@ app.use(cors());
 
 mongoose
   .connect(
-    "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
+    // "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
+    "mongodb://localhost:27017/"
   )
   .then(() => {
     console.log("Successfully connected to MongoDB");
@@ -47,12 +48,77 @@ const upload = multer({
 
 //creating upload endpoint for images
 
-app.use("./images", express.static("upload/images"));
+app.use("/images", express.static("upload/images"));
 
 app.post("/upload", upload.single("product"), (request, response) => {
   response.json({
     success: 1,
     image_url: `http://localhost:${port}/images/${request.file.filename}`,
+  });
+});
+
+//schema for creating products
+
+const Product = mongoose.model("Product", {
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  new_price: {
+    type: Number,
+    required: true,
+  },
+  old_price: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+  available: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+// **make schema in this format**
+// {
+//   "id": 1,
+//   "name": "Classic Cotton T-Shirt",
+//   "image": "http://localhost:4000/images/product_12345.png",
+//   "category": "men",
+//   "new_price": 25,
+//   "old_price": 30
+// }
+
+app.post("/addproduct", async (request, response) => {
+  const product = new Product({
+    id: request.body.id,
+    name: request.body.name,
+    image: request.body.image,
+    category: request.body.category,
+    new_price: request.body.new_price,
+    old_price: request.body.old_price,
+  });
+  console.log(product);
+  await product.save();
+  console.log("Saved");
+  response.json({
+    success: true,
+    name: request.body.name,
   });
 });
 
