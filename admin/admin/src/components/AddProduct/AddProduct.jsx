@@ -24,36 +24,92 @@ const AddProduct = () => {
     });
   };
 
+  // const addProduct = async () => {
+  //   console.log(productDetails);
+  //   let responseData;
+  //   let formData = new FormData();
+  //   let product = productDetails;
+  //   formData.append("product", image);
+
+  //   await fetch("http://localhost:4000/upload", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       responseData = data;
+  //     });
+
+  //   if (responseData.success) {
+  //     product.image = responseData.image_url;
+  //     console.log(product);
+  //     await fetch("http://localhost:4000/addproduct", {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(product),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         data.success ? alert("Product Added") : alert("Failed");
+  //       });
+  //   }
+  // };
+
   const addProduct = async () => {
     console.log(productDetails);
     let responseData;
-    let product = productDetails;
-    let formData = new formData();
+
+    // FIX 1: Use capital "F" for FormData
+    let formData = new FormData();
     formData.append("product", image);
 
-    await fetch("http://localhost:4000/uplad", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        responseData = data;
+    try {
+      // FIX 2: Use await consistently for the image upload
+      const uploadResponse = await fetch("http://localhost:4000/upload", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
       });
 
-    if (responseData.success) {
-      product.image = responseData.image_url;
-      console.log(product);
-      await fetch("http://localhost:4000/addproduct", {
-        method: "POST",
-        header: {
-          Accept: "Application/json",
-          'Content-type': "Apllication/json",
-        },
-        body:JSON.stringify(product),
-      });
+      responseData = await uploadResponse.json();
+
+      if (responseData.success) {
+        // FIX 3: Create a copy of the object instead of mutating state directly
+        let product = { ...productDetails };
+        product.image = responseData.image_url;
+
+        console.log(product);
+
+        // FIX 4: Corrected "headers" (plural) and "Application/json" (spelling)
+        const addResponse = await fetch("http://localhost:4000/addproduct", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        });
+
+        const finalData = await addResponse.json();
+
+        if (finalData.success) {
+          alert("Product Added Successfully!");
+          // Optional: Reset state here if you want to clear the form
+        } else {
+          alert("Failed to add product to database");
+        }
+      }
+    } catch (error) {
+      console.error("Error during product submission:", error);
+      alert("An error occurred. Check the console.");
     }
   };
 
@@ -99,7 +155,7 @@ const AddProduct = () => {
           className="add-product-selector"
           name="category"
         >
-          <option value="woman">Woman</option>
+          <option value="women">Woman</option>
           <option value="men">Men</option>
           <option value="kid">Kid</option>
         </select>
