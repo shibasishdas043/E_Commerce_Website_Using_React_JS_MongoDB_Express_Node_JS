@@ -121,14 +121,24 @@ app.post("/addproduct", async (request, response) => {
     id = 1;
   }
 
+  // const product = new Product({
+  //   id: request.body.id,
+  //   name: request.body.name,
+  //   image: request.body.image,
+  //   category: request.body.category,
+  //   new_price: request.body.new_price,
+  //   old_price: request.body.old_price,
+  // });
+
   const product = new Product({
-    id: request.body.id,
+    id: id, // Use the 'id' variable you calculated above
     name: request.body.name,
     image: request.body.image,
     category: request.body.category,
     new_price: request.body.new_price,
     old_price: request.body.old_price,
   });
+
   console.log(product);
   await product.save();
   console.log("Saved");
@@ -155,6 +165,65 @@ app.get("/allproducts", async (request, response) => {
   let products = await Product.find({});
   console.log("All products fetched");
   response.send(products);
+});
+
+// schema creating for user model
+
+const User = mongoose("Users", {
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: {
+    type: String,
+  },
+  cartData: {
+    type: Object,
+  },
+  data: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+//creating endpoint for registering the user
+
+app.post("/signup", async (request, response) => {
+  let check = await Users.findOne({ email: request.body.email });
+
+  if (check) {
+    return response.status(400).json({
+      success: false,
+      errors: "existing user found with same email address",
+    });
+  }
+  let cart = {};
+  for (let i = 0; i < 300; i++) {
+    cart[i] = 0;
+  }
+  const user = new Users({
+    name: request.body.username,
+    email: request.body.email,
+    password: request.body.password,
+    cartData: cart,
+  });
+
+  await user.save();
+
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+
+  const token = jwt.sign(data, "secret_ecom");
+  response.json({
+    success: true,
+    token,
+  });
 });
 
 app.listen(port, (error) => {
