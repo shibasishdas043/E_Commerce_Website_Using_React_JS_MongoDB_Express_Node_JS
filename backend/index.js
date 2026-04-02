@@ -6,23 +6,29 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+// const connectDB = require("./config/dBconfig.js");
 
 app.use(express.json());
 app.use(cors());
 
 // mongodb+srv://shibasishdas043_db_user:<db_password>@cluster0.si9gkky.mongodb.net/
 
-mongoose
-  .connect(
-    // "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
-    "mongodb://localhost:27017/",
-  )
-  .then(() => {
-    console.log("Successfully connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("MongoDB Connection Error: ", err.message);
-  });
+mongoose.connect(
+  // "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
+  "mongodb://localhost:27017/",
+  // "mongodb+srv://anid19631_db_user:2uFoe97WKB403jpF@cluster0.qqreqmg.mongodb.net/?appName=Cluster0",
+);
+// try {
+//   console.log("connected to db")
+// } catch (error) {
+
+// }
+// try(() => {
+//   console.log("Successfully connected to MongoDB");
+// })
+// catch((err) => {
+//   console.error("MongoDB Connection Error: ", err.message);
+// });
 
 //API Creation
 
@@ -145,11 +151,11 @@ app.post("/removeproduct", async (request, response) => {
 
 //creating api for getting all products
 
-app.get('/allproducts', async (request, response) => {
+app.get("/allproducts", async (request, response) => {
   let products = await Product.find({});
-  console.log('All products fetched');
+  console.log("All products fetched");
   response.send(products);
-})
+});
 
 app.listen(port, (error) => {
   if (!error) {
@@ -157,4 +163,5 @@ app.listen(port, (error) => {
   } else {
     console.log("error " + error);
   }
+  // connectDB();
 });
