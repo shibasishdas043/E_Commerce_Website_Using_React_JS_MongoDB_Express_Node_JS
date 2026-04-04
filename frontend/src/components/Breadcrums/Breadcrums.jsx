@@ -5,6 +5,10 @@ import arrow_icon from "../assets/Frontend_Assets/breadcrum_arrow.png";
 const Breadcrums = (props) => {
   const { product } = props;
 
+  if (!product) {
+    return <div className="breadcrum">Loading....</div>;
+  }
+
   return (
     <div className="breadcrum">
       Home <img src={arrow_icon} alt="" />
