@@ -1,9 +1,9 @@
 # 🛍️ Shopper — Full-Stack E-Commerce App
 
 ## Live Demo
-- 🛍️ Frontend: https://ecommerce-frontend.vercel.app
-- 🔧 Admin: https://ecommerce-admin.vercel.app
-- 🚀 Backend: https://ecommerce-backend.onrender.com
+- 🛍️ Frontend: https://e-commerce-website-using-react-js-m.vercel.app
+- 🔧 Admin: https://e-commerce-website-using-react-js-m-taupe.vercel.app
+- 🚀 Backend: https://e-commerce-website-using-react-js.onrender.com
 
 A full-stack e-commerce web application built with **React**, **Node.js/Express**, and **MongoDB Atlas**. Features a storefront with product browsing, cart management, and user authentication, plus an admin panel for managing products.
 
