@@ -22,7 +22,10 @@ const CartItems = () => {
         if (cartItems[event.id] > 0) {
           return (
             <div>
-              <div className="cartitems-format cartitems-format-main">
+              <div
+                key={event.id}
+                className="cartitems-format cartitems-format-main"
+              >
                 <img
                   className="carticon-product-icon"
                   src={event.image}
@@ -58,11 +61,12 @@ const CartItems = () => {
             <div className="cartitems-total-item">
               <p>Shipping Fee</p>
               <p>Free</p>
-              <hr />
-              <div className="cartitems-total-item">
-                <h3>Total</h3>
-                <h3>${getTotalCartAmount()}</h3>
-              </div>
+            </div>
+            <hr />
+            <div className="cartitems-total-item">
+              <h3>Total</h3>
+              <h3>${getTotalCartAmount()}</h3>
+              {/* </div> */}
             </div>
             <button>Proceed To Checkout</button>
           </div>
