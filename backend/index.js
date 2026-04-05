@@ -6,9 +6,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
+const cloudinary = require("cloudinary").v2; // ← must have .v2
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-
-
 
 // Cloudinary config
 cloudinary.config({
