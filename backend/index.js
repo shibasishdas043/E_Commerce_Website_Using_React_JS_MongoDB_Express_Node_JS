@@ -1,4 +1,5 @@
 require("dotenv").config();
+const port = process.env.PORT || 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -6,9 +7,9 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+const CloudinaryStorage = cloudinaryStorage.CloudinaryStorage;
 
-const port = process.env.PORT || 4000;
 
 // Cloudinary config
 cloudinary.config({
