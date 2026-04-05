@@ -12,7 +12,18 @@ const dns = require("dns");
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://e-commerce-website-using-react-js-m.vercel.app",
+      "https://e-commerce-website-using-react-js-m-taupe.vercel.app",
+    ],
+    credentials: true,
+  }),
+);
 
 // mongoose.connect(process.env.MONGO_URL);
 
@@ -56,7 +67,7 @@ app.use("/images", express.static("upload/images"));
 app.post("/upload", upload.single("product"), (request, response) => {
   response.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${request.file.filename}`,
+    image_url: `${process.env.BACKEND_URL}/images/${request.file.filename}`,
   });
 });
 
