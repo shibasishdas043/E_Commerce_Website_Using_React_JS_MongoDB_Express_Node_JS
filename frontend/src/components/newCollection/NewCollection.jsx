@@ -1,13 +1,13 @@
+const backendUrl = import.meta.env.VITE_API_URL;
 import React, { useEffect, useState } from "react";
 import "./NewCollection.css";
-// import new_collection from '../assets/Frontend_Assets/new_collections';
 import Item from "../Item/Item";
 
 const NewCollection = () => {
   const [newcollection, setnewCollection] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/newcollections")
+    fetch(`${backendUrl}/newcollections`)
       .then((response) => response.json())
       .then((data) => setnewCollection(data));
   }, []);

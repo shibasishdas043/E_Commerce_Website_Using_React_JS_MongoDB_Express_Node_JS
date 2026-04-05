@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 
 export const ShopContext = createContext(null);
 
+const backendUrl = import.meta.env.VITE_API_URL;
+
 const getDefaultCart = () => {
   let cart = {};
   for (let index = 0; index < 301; index++) {
@@ -19,8 +21,7 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     const initializeShop = async () => {
       try {
-        // Fetch all products
-        const productRes = await fetch("http://localhost:4000/allproducts");
+        const productRes = await fetch(`${backendUrl}/allproducts`);
         if (!productRes.ok)
           throw new Error(`Products fetch failed: ${productRes.status}`);
         const productData = await productRes.json();
@@ -30,11 +31,10 @@ const ShopContextProvider = (props) => {
         setError("Could not load products. Please refresh the page.");
       }
 
-      //  Fetch cart only if user is logged in
       const token = localStorage.getItem("auth-token");
       if (token) {
         try {
-          const cartRes = await fetch("http://localhost:4000/getcart", {
+          const cartRes = await fetch(`${backendUrl}/getcart`, {
             method: "POST",
             headers: {
               Accept: "application/json",
@@ -59,15 +59,13 @@ const ShopContextProvider = (props) => {
     initializeShop();
   }, []);
 
-  //  Add to Cart
-
   const addToCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
 
     const token = localStorage.getItem("auth-token");
     if (token) {
       try {
-        const res = await fetch("http://localhost:4000/addtocart", {
+        const res = await fetch(`${backendUrl}/addtocart`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -82,13 +80,10 @@ const ShopContextProvider = (props) => {
         console.log("🛒 Added to cart:", data);
       } catch (err) {
         console.error("❌ Add to cart error:", err.message);
-
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
       }
     }
   };
-
-  //  Remove from Cart
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
@@ -96,7 +91,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
     if (token) {
       try {
-        const res = await fetch("http://localhost:4000/removefromcart", {
+        const res = await fetch(`${backendUrl}/removefromcart`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -111,13 +106,10 @@ const ShopContextProvider = (props) => {
         console.log("🗑️ Removed from cart:", data);
       } catch (err) {
         console.error("❌ Remove from cart error:", err.message);
-
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
       }
     }
   };
-
-  //  Cart Calculations
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;

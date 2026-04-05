@@ -1,7 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
 import "./Navbar.css";
-// import all_product from "../assets/Frontend_Assets/all_product.js";
-// import data_product from "../assets/Frontend_Assets/data.js";
 import logo from "../assets/Frontend_Assets/logo.png";
 import cart_icon from "../assets/Frontend_Assets/cart_icon.png";
 import { Link } from "react-router-dom";

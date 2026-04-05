@@ -1,3 +1,4 @@
+const backendUrl = import.meta.env.VITE_API_URL;
 import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 
@@ -20,7 +21,7 @@ const LoginSignup = () => {
   const login = async () => {
     console.log("Login function executed", formData);
     try {
-      const response = await fetch("http://localhost:4000/login", {
+      const response = await fetch(`${backendUrl}/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -46,7 +47,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log("Sign Up function executed", formData);
     try {
-      const response = await fetch("http://localhost:4000/signup", {
+      const response = await fetch(`${backendUrl}/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",

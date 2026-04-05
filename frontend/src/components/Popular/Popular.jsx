@@ -1,3 +1,4 @@
+const backendUrl = import.meta.env.VITE_API_URL;
 import React, { useEffect, useState } from "react";
 import "./Popular.css";
 // import data_product from "../assets/Frontend_Assets/data.js";
@@ -7,7 +8,9 @@ const Popular = () => {
   const [popularProducts, setPopularProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/popularinwoman").then((response)=>response.json()).then((data)=>setPopularProducts(data));
+    fetch(`${backendUrl}/popularinwoman`)
+      .then((response) => response.json())
+      .then((data) => setPopularProducts(data));
   }, []);
 
   return (
