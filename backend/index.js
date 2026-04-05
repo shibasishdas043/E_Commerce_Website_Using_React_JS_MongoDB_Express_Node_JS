@@ -1,3 +1,4 @@
+require("dotenv").config();
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -6,29 +7,25 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-// const connectDB = require("./config/dBconfig.js");
+const dns = require("dns");
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 app.use(express.json());
 app.use(cors());
 
-// mongodb+srv://shibasishdas043_db_user:<db_password>@cluster0.si9gkky.mongodb.net/
+// mongoose.connect(process.env.MONGO_URL);
 
-mongoose.connect(
-  // "mongodb+srv://shiba2026:@Shiba#2026@cluster0.4jzsdux.mongodb.net/?appName=Cluster0",
-  "mongodb://localhost:27017/",
-  // "mongodb+srv://anid19631_db_user:2uFoe97WKB403jpF@cluster0.qqreqmg.mongodb.net/?appName=Cluster0",
-);
-// try {
-//   console.log("connected to db")
-// } catch (error) {
-
-// }
-// try(() => {
-//   console.log("Successfully connected to MongoDB");
-// })
-// catch((err) => {
-//   console.error("MongoDB Connection Error: ", err.message);
-// });
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("✅ MongoDB connected successfully");
+  } catch (error) {
+    console.error("❌ MongoDB connection failed:", error.message);
+    process.exit(1); // Exit if DB can't connect
+  }
+};
+connectDB();
 
 //API Creation
 
@@ -92,7 +89,7 @@ const Product = mongoose.model("Product", {
   },
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   available: {
     type: Boolean,
@@ -303,10 +300,10 @@ const fetchUser = async (request, response, next) => {
 app.post("/addtocart", fetchUser, async (request, response) => {
   // console.log(request.body, request.user);
   console.log("added", request.body.itemId);
-  let userData = await Users.findOne({ _id: request.user.id });
-  userData.cartdData[request.body.itemId] += 1;
+  let userData = await User.findOne({ _id: request.user.id });
+  userData.cartData[request.body.itemId] += 1;
 
-  await Users.findOneAndUpdate(
+  await User.findOneAndUpdate(
     {
       _id: request.user.id,
     },
@@ -321,10 +318,10 @@ app.post("/addtocart", fetchUser, async (request, response) => {
 //creating endpoint to remove product from cart data
 
 app.post("/removefromcart", fetchUser, async (request, response) => {
-  console.log("removed",request.body.itemId);
+  console.log("removed", request.body.itemId);
   let userData = await User.findOne({ _id: request.user.id });
-  if (userData.cartdData[request.body.itemId] > 0) {
-    userData.cartdData[request.body.itemId] -= 1;
+  if (userData.cartData[request.body.itemId] > 0) {
+    userData.cartData[request.body.itemId] -= 1;
   }
 
   await User.findOneAndUpdate(
@@ -341,18 +338,14 @@ app.post("/removefromcart", fetchUser, async (request, response) => {
 
 //creating endpoint to get cart data
 
-app.post('/getcart', fetchUser, async (request, response) => {
+app.post("/getcart", fetchUser, async (request, response) => {
   console.log("GetCart");
-  let userData = await User.findOne(
-    {
-      _id:request.user.id,
-    }
-  )
+  let userData = await User.findOne({
+    _id: request.user.id,
+  });
 
   response.json(userData.cartData);
 });
-  
-
 
 app.listen(port, (error) => {
   if (!error) {
@@ -360,5 +353,4 @@ app.listen(port, (error) => {
   } else {
     console.log("error " + error);
   }
-  // connectDB();
 });
