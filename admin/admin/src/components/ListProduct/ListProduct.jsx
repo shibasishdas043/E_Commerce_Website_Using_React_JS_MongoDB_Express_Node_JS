@@ -1,3 +1,4 @@
+// require("dotenv").config();
 import React, { useEffect, useState } from "react";
 import "./ListProduct.css";
 import cross_icon from "../../assets/Admin_Assets/cross_icon.png";
@@ -8,7 +9,9 @@ const ListProduct = () => {
   // 1. Define fetchInfo outside so both useEffect and removeProduct can use it
   const fetchInfo = async () => {
     try {
-      const response = await fetch("http://localhost:4000/allproducts");
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/allproducts`,
+      );
       const data = await response.json();
       setAllproducts(data);
     } catch (error) {
@@ -22,7 +25,7 @@ const ListProduct = () => {
 
   // 2. Consolidate into one working removal function
   const removeProduct = async (id) => {
-    await fetch("http://localhost:4000/removeproduct", {
+    await fetch(`${import.meta.env.VITE_API_URL}/removeproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",

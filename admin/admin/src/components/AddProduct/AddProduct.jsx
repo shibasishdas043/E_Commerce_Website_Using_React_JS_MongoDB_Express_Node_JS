@@ -71,7 +71,7 @@ const AddProduct = () => {
 
     try {
       // FIX 2: Use await consistently for the image upload
-      const uploadResponse = await fetch("http://localhost:4000/upload", {
+      const uploadResponse = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -89,7 +89,7 @@ const AddProduct = () => {
         console.log(product);
 
         // FIX 4: Corrected "headers" (plural) and "Application/json" (spelling)
-        const addResponse = await fetch("http://localhost:4000/addproduct", {
+        const addResponse = await fetch(`${import.meta.env.VITE_API_URL}/addproduct`, {
           method: "POST",
           headers: {
             Accept: "application/json",
