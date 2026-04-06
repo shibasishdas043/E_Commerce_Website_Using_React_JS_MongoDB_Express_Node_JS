@@ -6,6 +6,9 @@
 
 - 🛍️ Frontend: https://e-commerce-website-using-react-js-m.vercel.app
 - 🔧 Admin: https://e-commerce-website-using-react-js-m-taupe.vercel.app
+
+Wait Approx 30 Sec After Hitting The Backend , And Before Start Hit The Frontend
+
 - 🚀 Backend: https://e-commerce-website-using-react-js.onrender.com
 
 A full-stack e-commerce web application built with **React**, **Node.js/Express**, and **MongoDB Atlas**. Features a storefront with product browsing, cart management, and user authentication, plus an admin panel for managing products.
