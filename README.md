@@ -1,6 +1,9 @@
 # 🛍️ Shopper — Full-Stack E-Commerce App
 
 ## Live Demo
+
+## Please Hit Backend Link First To Boot The Server Otherwise Frontend Won't Work Properly
+
 - 🛍️ Frontend: https://e-commerce-website-using-react-js-m.vercel.app
 - 🔧 Admin: https://e-commerce-website-using-react-js-m-taupe.vercel.app
 - 🚀 Backend: https://e-commerce-website-using-react-js.onrender.com
