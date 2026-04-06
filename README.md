@@ -7,7 +7,7 @@
 - 🛍️ Frontend: https://e-commerce-website-using-react-js-m.vercel.app
 - 🔧 Admin: https://e-commerce-website-using-react-js-m-taupe.vercel.app
 
-Wait Approx 30 Sec After Hitting The Backend , And Before Start Hit The Frontend
+Please Wait Approx 30 Sec After Hitting The Backend , And Before Start Hit The Frontend
 
 - 🚀 Backend: https://e-commerce-website-using-react-js.onrender.com
 
