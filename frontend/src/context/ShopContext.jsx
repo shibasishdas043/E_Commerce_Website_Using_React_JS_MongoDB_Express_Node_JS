@@ -76,7 +76,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (!res.ok) throw new Error(`Add to cart failed: ${res.status}`);
-        const data = await res.json();
+        const data = await res.text();
         console.log("🛒 Added to cart:", data);
       } catch (err) {
         console.error("❌ Add to cart error:", err.message);
@@ -102,7 +102,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (!res.ok) throw new Error(`Remove from cart failed: ${res.status}`);
-        const data = await res.json();
+        const data = await res.text();
         console.log("🗑️ Removed from cart:", data);
       } catch (err) {
         console.error("❌ Remove from cart error:", err.message);
