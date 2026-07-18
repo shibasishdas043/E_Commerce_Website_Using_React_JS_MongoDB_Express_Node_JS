@@ -60,7 +60,7 @@ const ShopContextProvider = (props) => {
   }, []);
 
   const addToCart = async (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
 
     const token = localStorage.getItem("auth-token");
     if (token) {
@@ -80,13 +80,13 @@ const ShopContextProvider = (props) => {
         console.log("🛒 Added to cart:", data);
       } catch (err) {
         console.error("❌ Add to cart error:", err.message);
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+        setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) - 1 }));
       }
     }
   };
 
   const removeFromCart = async (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => ({ ...prev, [itemId]: Math.max((prev[itemId] || 0) - 1, 0) }));
 
     const token = localStorage.getItem("auth-token");
     if (token) {
